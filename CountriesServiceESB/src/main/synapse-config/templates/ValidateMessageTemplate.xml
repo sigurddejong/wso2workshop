@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template name="ValidateMessageTemplate" xmlns="http://ws.apache.org/ns/synapse">
+    <parameter name="schemadef"/>
+    <sequence>
+        <log category="DEBUG" level="custom">
+            <property expression="fn:concat('Validation against schema ',$func:schemadef)" name="Schemadef: "/>
+        </log>
+        <validate cache-schema="true">
+            <schema key="{$func:schemadef}"/>
+            <on-fail>
+                <makefault version="soap11">
+                    <code value="soap11Env:VersionMismatch" xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/"/>
+                    <reason expression="fn:concat($func:schemadef,': Invalid Request!!! SourceError ',get-property('ERROR_CODE'),' ',get-property('ERROR_MESSAGE'))"/>
+                    <role/>
+                </makefault>
+                <log category="ERROR" level="custom">
+                    <property name="ValidationResult " value="Insuccesfull: Invalid Request"/>
+                </log>
+                <send/>
+            </on-fail>
+        </validate>
+        <log category="DEBUG" level="custom">
+            <property name="Validationresult " value="Successfull"/>
+        </log>
+    </sequence>
+</template>

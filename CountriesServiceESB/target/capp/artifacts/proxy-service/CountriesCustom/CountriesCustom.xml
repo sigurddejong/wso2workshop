@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="CountriesCustom" startOnLoad="true" trace="disable"
+  transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+  <target>
+    <inSequence>
+      <!-- get operation -->
+      <property expression="get-property('OperationName')"
+        name="MsgOperation" scope="default" type="STRING"/>
+      <!-- validate based on xsd belonging to operation -->
+      <switch source="get-property('MsgOperation')">
+        <case regex="countryCodesRequest">
+          <!--  Validate message -->
+          <call-template target="ValidateMessageTemplate">
+            <with-param name="schemadef" value="CountryCodes.xsd"/>
+          </call-template>
+          <property name="uri.var.queryparam" scope="default"
+            type="STRING" value="alpha?codes="/>
+        </case>
+        <case regex="countryNameRequest">
+          <!--  Validate message -->
+          <call-template target="ValidateMessageTemplate">
+            <with-param name="schemadef" value="CountryName.xsd"/>
+          </call-template>
+          <!-- <property name="uri.var.queryparam" expression=""/>-->
+        </case>
+        <case regex="countryCurrencyRequest">
+          <call-template target="ValidateMessageTemplate">
+            <with-param name="schemadef" value="CountryCurrency.xsd"/>
+          </call-template>
+          <!-- <property name="uri.var.queryparam" expression=""/>-->
+        </case>
+        <case regex="countryCallingCodeRequest">
+          <call-template target="ValidateMessageTemplate">
+            <with-param name="schemadef" value="CountryCallingCode.xsd"/>
+          </call-template>
+          <!-- <property name="uri.var.queryparam" expression=""/>-->
+        </case>
+        <default>
+          <!--  Validate message -->
+          <!--  Validate message -->
+        </default>
+      </switch>
+    </inSequence>
+    <outSequence/>
+    <faultSequence/>
+  </target>
+</proxy>

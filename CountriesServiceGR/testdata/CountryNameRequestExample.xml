@@ -1,0 +1,12 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<name:countryNameRequest xmlns:name="http://wso2.qualogy.com/country/name">
+			<!-- (part of) Country name -->
+			<name:name>United</name:name>
+			<!-- if element name is part of countryname specify fulltext = true 
+			     otherwise specify false, if omitted false is default -->
+			<name:fulltext>false</name:fulltext>
+		</name:countryNameRequest>
+	</soapenv:Body>
+</soapenv:Envelope>

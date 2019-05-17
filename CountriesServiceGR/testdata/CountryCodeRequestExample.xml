@@ -1,0 +1,8 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<code:countryCodeRequest xmlns:code="http://wso2.qualogy.com/country/code">
+			<code:code>NL</code:code>
+		</code:countryCodeRequest>
+	</soapenv:Body>
+</soapenv:Envelope>

@@ -1,0 +1,60 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+   <soapenv:Body>
+      <jsonArray>
+         <jsonElement>
+            <name>Netherlands</name>
+            <topLevelDomain>.nl</topLevelDomain>
+            <alpha2Code>NL</alpha2Code>
+            <alpha3Code>NLD</alpha3Code>
+            <callingCodes>31</callingCodes>
+            <capital>Amsterdam</capital>
+            <altSpellings>NL</altSpellings>
+            <altSpellings>Holland</altSpellings>
+            <altSpellings>Nederland</altSpellings>
+            <region>Europe</region>
+            <subregion>Western Europe</subregion>
+            <population>17019800</population>
+            <latlng>52.5</latlng>
+            <latlng>5.75</latlng>
+            <demonym>Dutch</demonym>
+            <area>41850.0</area>
+            <gini>30.9</gini>
+            <timezones>UTC-04:00</timezones>
+            <timezones>UTC+01:00</timezones>
+            <borders>BEL</borders>
+            <borders>DEU</borders>
+            <nativeName>Nederland</nativeName>
+            <numericCode>528</numericCode>
+            <currencies>
+               <code>EUR</code>
+               <name>Euro</name>
+               <symbol>€</symbol>
+            </currencies>
+            <languages>
+               <iso639_1>nl</iso639_1>
+               <iso639_2>nld</iso639_2>
+               <name>Dutch</name>
+               <nativeName>Nederlands</nativeName>
+            </languages>
+            <translations>
+               <de>Niederlande</de>
+               <es>Países Bajos</es>
+               <fr>Pays-Bas</fr>
+               <ja>????</ja>
+               <it>Paesi Bassi</it>
+               <br>Holanda</br>
+               <pt>Países Baixos</pt>
+               <nl>Nederland</nl>
+               <hr>Nizozemska</hr>
+               <fa>??????? ????</fa>
+            </translations>
+            <flag>https://restcountries.eu/data/nld.svg</flag>
+            <regionalBlocs>
+               <acronym>EU</acronym>
+               <name>European Union</name>
+            </regionalBlocs>
+            <cioc>NED</cioc>
+         </jsonElement>
+      </jsonArray>
+   </soapenv:Body>
+</soapenv:Envelope>

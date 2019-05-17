@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="CountriesService" startOnLoad="true" transports="http https" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <!-- Get message operation -->
+            <property expression="local-name($body/*)" name="MsgOperation" scope="default" type="STRING"/>
+            <log category="DEBUG" level="custom">
+                <property expression="$body" name="*** Bericht: "/>
+                <property expression="get-property('MsgOperation')" name="Operatie: "/>
+            </log>
+            <switch source="get-property('MsgOperation')">
+                <case regex="countryCodeRequest">
+                    <call-template target="ValidateMessageTemplate">
+                        <with-param name="schemadef" value="gov:/qualogy/countryservice/xsd/CountryCode.xsd"/>
+                    </call-template>
+                    <property expression="$body/code:countryCodeRequest/code:code" name="requestValue" scope="default" type="STRING" xmlns:code="http://wso2.qualogy.com/country/code"/>
+                    <property expression="fn:concat('alpha?codes=',get-property('requestValue'))" name="uri.var.queryparam" scope="default" type="STRING"/>
+                    <log category="DEBUG" level="custom">
+                        <property expression="get-property('requestValue')" name="*** code"/>
+                        <property expression="get-property('uri.var.queryparam')" name="*** uri.var.queryparam"/>
+                    </log>
+                    <!-- https://restcountries.eu/rest/v2/alpha?codes={code} -->
+                </case>
+                <case regex="countryNameRequest">
+                    <call-template target="ValidateMessageTemplate">
+                        <with-param name="schemadef" value="gov:/qualogy/countryservice/xsd/CountryName.xsd"/>
+                    </call-template>
+                    <property expression="$body/name:countryNameRequest/name:name" name="requestValue" scope="default" type="STRING" xmlns:name="http://wso2.qualogy.com/country/name"/>
+                    <property expression="$body/name:countryNameRequest/name:fulltext" name="fullText" scope="default" type="STRING" xmlns:name="http://wso2.qualogy.com/country/name"/>
+                    <filter regex="true" source="get-property('fullText')">
+                        <then>
+                            <property expression="fn:concat('name/',get-property('requestValue'),'?fullText=true')" name="uri.var.queryparam" scope="default" type="STRING"/>
+                        </then>
+                        <else>
+                            <property expression="fn:concat('name/',get-property('requestValue'))" name="uri.var.queryparam" scope="default" type="STRING"/>
+                        </else>
+                    </filter>
+                    <log category="DEBUG" level="custom">
+                        <property expression="get-property('requestValue')" name="*** name"/>
+                        <property expression="get-property('uri.var.queryparam')" name="*** uri.var.queryparam"/>
+                    </log>
+                    <!-- https://restcountries.eu/rest/v2/name/{name} -->
+                </case>
+                <case regex="countryCurrencyRequest">
+                    <call-template target="ValidateMessageTemplate">
+                        <with-param name="schemadef" value="gov:/qualogy/countryservice/xsd/CountryCurrency.xsd"/>
+                    </call-template>
+                    <property expression="$body/curr:countryCurrencyRequest/curr:currency" name="requestValue" scope="default" type="STRING" xmlns:curr="http://wso2.qualogy.com/country/currency"/>
+                    <property expression="fn:concat('currency/',get-property('requestValue'))" name="uri.var.queryparam" scope="default" type="STRING"/>
+                    <log category="DEBUG" level="custom">
+                        <property expression="get-property('requestValue')" name="*** curr"/>
+                        <property expression="get-property('uri.var.queryparam')" name="*** uri.var.queryparam"/>
+                    </log>
+                    <!-- https://restcountries.eu/rest/v2/currency/{currency} -->
+                </case>
+                <case regex="countryCallingCodeRequest">
+                    <call-template target="ValidateMessageTemplate">
+                        <with-param name="schemadef" value="gov:/qualogy/countryservice/xsd/CountryCallingCode.xsd"/>
+                    </call-template>
+                    <property expression="$body/callcode:countryCallingCodeRequest/callcode:callingcode" name="requestValue" scope="default" type="STRING" xmlns:callcode="http://wso2.qualogy.com/country/callingcode"/>
+                    <property expression="fn:concat('callingcode/',get-property('requestValue'))" name="uri.var.queryparam" scope="default" type="STRING"/>
+                    <log category="DEBUG" level="custom">
+                        <property expression="get-property('requestValue')" name="*** callcode"/>
+                        <property expression="get-property('uri.var.queryparam')" name="*** uri.var.queryparam"/>
+                    </log>
+                    <!-- https://restcountries.eu/rest/v2/callingcode/{callingcode} -->
+                </case>
+                <default>
+                    <log category="ERROR" level="custom">
+                        <property expression="fn:concat('Operation ',get-property('MsgOperation'),' not valid.')" name="Operation: "/>
+                    </log>
+                    <call-template target="ReturnErrorTemplate">
+                        <with-param name="errorCode" value="Server:InvalidOperationError"/>
+                        <with-param name="errorMessage" value="Invalid operation"/>
+                    </call-template>
+                    <drop/>
+                </default>
+            </switch>
+            <!--  At this point we have validated the message and pupulated the variable part of the uri that will be
+			      used in the endpoint we are going to call now -->
+            <property action="remove" name="Accept-Encoding" scope="transport"/>
+            <property name="Accept" scope="default" type="STRING" value="application/json"/>
+            <send>
+                <endpoint key="RestCountriesEP"/>
+            </send>
+        </inSequence>
+        <outSequence>
+            <!-- Workaround for serialization bug after changing content-type: ref: https://github.com/wso2/product-ei/issues/3718  -->
+            <property expression="$body/jsonArray/jsonElement/name" name="record" scope="default" type="STRING"/>
+            <filter regex="true" source="boolean(get-property('record'))">
+                <then>
+                    <xslt key="gov:/qualogy/countryservice/xslt/CountriesResponse.xslt"/>
+                    <!-- Translate response using xslt -->
+                    <send/>
+                </then>
+                <else>
+                    <call-template target="ReturnErrorTemplate">
+                        <with-param name="errorCode" value="Server:InvalidResponseMessage"/>
+                        <with-param name="errorMessage" value="Invalid responsemessage received"/>
+                    </call-template>
+                </else>
+            </filter>
+        </outSequence>
+        <faultSequence>
+            <send/>
+        </faultSequence>
+    </target>
+</proxy>

@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<curr:countryCurrencyRequest xmlns:curr="http://wso2.qualogy.com/country/currency">
+			<!-- Currency code (e.g. EUR for Euro of USD of US Dollar) -->
+			<curr:currency>EUR</curr:currency>
+		</curr:countryCurrencyRequest>
+	</soapenv:Body>
+</soapenv:Envelope>

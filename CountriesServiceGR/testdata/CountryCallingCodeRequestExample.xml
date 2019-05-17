@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<callcode:countryCallingCodeRequest xmlns:callcode="http://wso2.qualogy.com/country/callingcode">
+			<!-- Callingcode (e.g. 31 for The Netherlands) -->
+			<callcode:callingcode>31</callcode:callingcode>
+		</callcode:countryCallingCodeRequest>
+	</soapenv:Body>
+</soapenv:Envelope>

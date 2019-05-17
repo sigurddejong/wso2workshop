@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.qualogy.wso2.CountriesServiceESB</groupId>
+  <artifactId>CountriesServiceESB_module</artifactId>
+  <version>1.0.0</version>
+  <packaging>pom</packaging>
+  <name>CountriesServiceESB_module</name>
+  <description>CountriesServiceESB_module</description>
+  <modules>
+    <module>artifacts\proxy-service\CountriesCustom</module>
+    <module>artifacts\endpoint\RestCountriesEP</module>
+    <module>artifacts\template\ValidateMessageTemplate</module>
+  </modules>
+</project>

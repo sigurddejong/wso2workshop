@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?><resource name="CountryCallingCode.xsd" isCollection="false" path="/_system/governance//_system/config/resource/countryservice/xsd/countrycodes.xsd/xsd/CountryCallingCode.xsd" registryUrl="https://localhost:9443/registry" status="added">
+    <mediaType>application/x-xsd+xml</mediaType>
+</resource>

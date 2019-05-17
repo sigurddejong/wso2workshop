@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="CountriesService" groupId="com.qualogy.wso2.CountriesServiceESB.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/CountriesService.xml</file>
+    </artifact>
+    <artifact name="RestCountriesEP" groupId="com.qualogy.wso2.CountriesServiceESB.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/RestCountriesEP.xml</file>
+    </artifact>
+    <artifact name="ValidateMessageTemplate" groupId="com.qualogy.wso2.CountriesServiceESB.template" version="1.0.0" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/templates/ValidateMessageTemplate.xml</file>
+    </artifact>
+    <artifact name="ReturnErrorTemplate" groupId="com.qualogy.wso2.CountriesServiceESB.template" version="1.0.0" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/templates/ReturnErrorTemplate.xml</file>
+    </artifact>
+</artifacts>

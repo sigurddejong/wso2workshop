@@ -1,0 +1,15 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://wso2.qualogy.com/country/name" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="countryNameRequest" type="name:countryNameRequestType" xmlns:name="http://wso2.qualogy.com/country/name"/>
+	<xs:complexType name="countryNameRequestType">
+		<xs:sequence>
+			<xs:element name="name"  maxOccurs="1" minOccurs="1" nillable="false">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element type="xs:boolean" name="fulltext"  maxOccurs="1" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
