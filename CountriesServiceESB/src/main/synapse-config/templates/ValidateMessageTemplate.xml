@@ -2,24 +2,21 @@
 <template name="ValidateMessageTemplate" xmlns="http://ws.apache.org/ns/synapse">
     <parameter name="schemadef"/>
     <sequence>
-        <log category="DEBUG" level="custom">
-            <property expression="fn:concat('Validation against schema ',$func:schemadef)" name="Schemadef: "/>
-        </log>
-        <validate cache-schema="true">
+        <validate cache-schema="true" description="Validate message">
             <schema key="{$func:schemadef}"/>
             <on-fail>
-                <makefault version="soap11">
+                <makefault description="Create Faultmessage if validation is not succesfull" version="soap11">
                     <code value="soap11Env:VersionMismatch" xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/"/>
                     <reason expression="fn:concat($func:schemadef,': Invalid Request!!! SourceError ',get-property('ERROR_CODE'),' ',get-property('ERROR_MESSAGE'))"/>
                     <role/>
                 </makefault>
-                <log category="ERROR" level="custom">
+                <log category="ERROR" description="Errormessage" level="custom">
                     <property name="ValidationResult " value="Insuccesfull: Invalid Request"/>
                 </log>
-                <send/>
+                <send description="Send errormessage to the client"/>
             </on-fail>
         </validate>
-        <log category="DEBUG" level="custom">
+        <log description="ValidationResult" level="custom">
             <property name="Validationresult " value="Successfull"/>
         </log>
     </sequence>

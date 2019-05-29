@@ -3,14 +3,14 @@
     <parameter name="errorCode"/>
     <parameter name="errorMessage"/>
     <sequence>
-        <log category="ERROR" level="custom">
+        <log category="ERROR" description="Log error message" level="custom">
             <property expression="fn:concat('code: ',$func:errorCode)" name="ServerError: "/>
             <property expression="fn:concat('message: ',$func:errorMessage)" name="ServerError: "/>
         </log>
-        <makefault version="soap11">
+        <makefault description="Construct errormessage to the client" version="soap11">
             <code value="soap11Env:VersionMismatch" xmlns:soap11Env="http://schemas.xmlsoap.org/soap/envelope/"/>
             <reason expression="fn:concat('ServerError: ',$func:errorCode,' ',$func:errorMessage)"/>
         </makefault>
-        <send/>
+        <send description="Send errormessage back to the client"/>
     </sequence>
 </template>
